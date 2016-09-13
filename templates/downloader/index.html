@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Downloader</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container center_div">
+    <form method="POST" action="index">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="songInput">Enter Song URL : </label>
+            <input type="text" class="form-control" id="songInput" placeholder="Enter URL" name="url">
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Convert!</button>
+        </div>
+    </form>
+</div>
+<br>
+<div class="container">
+    {% if error == True %}
+        <div class="alert alert-danger alert-dismissible fade-in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Oh snap!</strong> {{ error_value }}
+        </div>
+    {% endif %}
+</div>
+<div class="list-group container">
+    <h3>Songs :</h3>
+    <br>
+    {% for song in songs %}
+        <a href="{{ song.url }}" class="list-group-item">{{ song.name }}</a>
+    {% endfor %}
+</div>
+</body>
+</html>
